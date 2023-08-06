@@ -3,12 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".WorkoutDetails">
+    tools:context=".WorkoutDetailsFragment">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment"
-        android:gravity="center"/>
+        android:gravity="center"
+        android:text="This screen is a stub and will be implemented in the next " />
 
 </FrameLayout>
