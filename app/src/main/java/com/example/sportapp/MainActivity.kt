@@ -34,14 +34,20 @@ class MainActivity : AppCompatActivity() {
                     add<WorkoutDetailsFragment>(R.id.fragment_workout_container)
                 }
             } else {
-                sharedPref.edit().putString("url", linkFromFirebase)
-                    .apply() // saving link from Firebase Remote Config locally
+                sharedPref.edit().putString("url", linkFromFirebase).apply() // saving link from Firebase Remote Config locally
                 Toast.makeText(this, "opening WebView", Toast.LENGTH_SHORT).show()
-                // opening WebView
+                supportFragmentManager.commit {
+                    setReorderingAllowed(true)
+                    add<WebViewFragment>(R.id.fragment_web_view_container)
+                }
             }
         } else {
             if (hasInternet()) { // just works for minSdk >= 23
                 Toast.makeText(this, "opening WebView", Toast.LENGTH_SHORT).show()
+                supportFragmentManager.commit {
+                    setReorderingAllowed(true)
+                    add<WebViewFragment>(R.id.fragment_web_view_container)
+                }
                 // opening WebView
             } else {
                 supportFragmentManager.commit { // opening NoInternetFragment
