@@ -24,17 +24,18 @@ class MainActivity : AppCompatActivity() {
 
         val sharedPref = getSharedPreferences("my_prefs", Context.MODE_PRIVATE)
         val urlFromSharedPref = sharedPref.getString("url", "") // getting a link locally
+        var linkFirebaseRemoteConfig: String
 
         if (urlFromSharedPref.isNullOrBlank()) { // checking link from SharedPreferences
-            val linkFromFirebase = getLinkFromFirebase()
+            linkFirebaseRemoteConfig = intent.getStringExtra("url").toString()
 
-            if (linkFromFirebase.isEmpty() || checkIsEmulatorOrGoogle()) { // checking link from Firebase Remote Config and device
+            if (linkFirebaseRemoteConfig.isEmpty() || checkIsEmulatorOrGoogle()) { // checking link from Firebase Remote Config and device
                 supportFragmentManager.commit { // opening the stub
                     setReorderingAllowed(true)
                     add<WorkoutDetailsFragment>(R.id.fragment_workout_container)
                 }
             } else {
-                sharedPref.edit().putString("url", linkFromFirebase).apply() // saving link from Firebase Remote Config locally
+                sharedPref.edit().putString("url", linkFirebaseRemoteConfig).apply() // saving link from Firebase Remote Config locally
                 Toast.makeText(this, "opening WebView", Toast.LENGTH_SHORT).show()
                 supportFragmentManager.commit {
                     setReorderingAllowed(true)
@@ -58,14 +59,6 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
-
-    private fun getLinkFromFirebase(): String {
-        val remoteConfigManager = RemoteConfigManager()
-        remoteConfigManager.initFRC()
-
-        return remoteConfigManager.getValueFromRFC("url")
-    }
-
     @RequiresApi(Build.VERSION_CODES.M)
     private fun hasInternet(): Boolean {
         val connectivityManager = getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager
