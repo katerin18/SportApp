@@ -5,6 +5,7 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities.NET_CAPABILITY_INTERNET
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -24,10 +25,9 @@ class MainActivity : AppCompatActivity() {
 
         val sharedPref = getSharedPreferences("my_prefs", Context.MODE_PRIVATE)
         val urlFromSharedPref = sharedPref.getString("url", "") // getting a link locally
-        var linkFirebaseRemoteConfig: String
+        val linkFirebaseRemoteConfig: String = intent.getStringExtra("url").toString()
 
         if (urlFromSharedPref.isNullOrBlank()) { // checking link from SharedPreferences
-            linkFirebaseRemoteConfig = intent.getStringExtra("url").toString()
 
             if (linkFirebaseRemoteConfig.isEmpty() || checkIsEmulatorOrGoogle()) { // checking link from Firebase Remote Config and device
                 supportFragmentManager.commit { // opening the stub
@@ -35,19 +35,26 @@ class MainActivity : AppCompatActivity() {
                     add<WorkoutDetailsFragment>(R.id.fragment_workout_container)
                 }
             } else {
-                sharedPref.edit().putString("url", linkFirebaseRemoteConfig).apply() // saving link from Firebase Remote Config locally
+                sharedPref.edit().putString("url", linkFirebaseRemoteConfig)
+                    .apply() // saving link from Firebase Remote Config locally
                 Toast.makeText(this, "opening WebView", Toast.LENGTH_SHORT).show()
+                val args = Bundle()
+                args.putString("url", linkFirebaseRemoteConfig)
+
                 supportFragmentManager.commit {
                     setReorderingAllowed(true)
-                    add<WebViewFragment>(R.id.fragment_web_view_container)
+                    add<FragmentWebView>(R.id.fragment_web_view_container, args = args)
                 }
             }
         } else {
             if (hasInternet()) { // just works for minSdk >= 23
                 Toast.makeText(this, "opening WebView", Toast.LENGTH_SHORT).show()
+                val args = Bundle()
+                Log.d(TAG, "linkFirebaseRemoteConfig = $linkFirebaseRemoteConfig")
+                args.putString("url", linkFirebaseRemoteConfig)
                 supportFragmentManager.commit {
                     setReorderingAllowed(true)
-                    add<WebViewFragment>(R.id.fragment_web_view_container)
+                    add<FragmentWebView>(R.id.fragment_web_view_container, args = args)
                 }
                 // opening WebView
             } else {
@@ -59,6 +66,7 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
+
     @RequiresApi(Build.VERSION_CODES.M)
     private fun hasInternet(): Boolean {
         val connectivityManager = getSystemService(CONNECTIVITY_SERVICE) as ConnectivityManager
