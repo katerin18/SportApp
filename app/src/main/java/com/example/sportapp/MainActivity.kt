@@ -5,8 +5,6 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities.NET_CAPABILITY_INTERNET
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.add
@@ -24,7 +22,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val sharedPref = getSharedPreferences("my_prefs", Context.MODE_PRIVATE)
-        val urlFromSharedPref = sharedPref.getString("url", "") // getting a link locally
+        val urlFromSharedPref = sharedPref.getString("url", "")
         val linkFirebaseRemoteConfig: String = intent.getStringExtra("url").toString()
 
         if (urlFromSharedPref.isNullOrBlank()) { // checking link from SharedPreferences
@@ -37,7 +35,6 @@ class MainActivity : AppCompatActivity() {
             } else {
                 sharedPref.edit().putString("url", linkFirebaseRemoteConfig)
                     .apply() // saving link from Firebase Remote Config locally
-                Toast.makeText(this, "opening WebView", Toast.LENGTH_SHORT).show()
                 val args = Bundle()
                 args.putString("url", linkFirebaseRemoteConfig)
 
@@ -48,9 +45,7 @@ class MainActivity : AppCompatActivity() {
             }
         } else {
             if (hasInternet()) { // just works for minSdk >= 23
-                Toast.makeText(this, "opening WebView", Toast.LENGTH_SHORT).show()
                 val args = Bundle()
-                Log.d(TAG, "linkFirebaseRemoteConfig = $linkFirebaseRemoteConfig")
                 args.putString("url", linkFirebaseRemoteConfig)
                 supportFragmentManager.commit {
                     setReorderingAllowed(true)

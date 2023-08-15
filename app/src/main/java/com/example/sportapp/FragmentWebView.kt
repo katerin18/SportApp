@@ -6,14 +6,13 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
-import android.os.Parcelable
 import android.provider.MediaStore
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.webkit.*
 import androidx.activity.OnBackPressedCallback
-import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import com.example.sportapp.databinding.FragmentWebViewBinding
 import java.io.File
@@ -24,10 +23,8 @@ import java.util.*
 open class FragmentWebView : Fragment() {
     private var _binding: FragmentWebViewBinding? = null
     private val binding get() = _binding!!
-
-    private var imageUri: Uri? = null
+    private var mCameraPhotoPath: String? = null
     private var mFilePathCallback: ValueCallback<Array<Uri>>? = null
-    private val REQUEST_CODE = 1234
     private var arg = ""
 
     override fun onCreateView(
@@ -35,8 +32,23 @@ open class FragmentWebView : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentWebViewBinding.inflate(inflater)
-        arg = arguments?.getString("url").toString()
+        arg = arguments?.getString(KEY_TO_OPEN, "") ?: ""
         return binding.root
+    }
+
+    @Throws(IOException::class)
+    private fun createImageFile(): File {
+        val timeStamp =
+            SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+        val imageFileName = "JPEG_" + timeStamp + "_"
+        val storageDir = Environment.getExternalStoragePublicDirectory(
+            Environment.DIRECTORY_PICTURES
+        )
+        return File.createTempFile(
+            imageFileName,  /* prefix */
+            ".jpg",  /* suffix */
+            storageDir /* directory */
+        )
     }
 
     @SuppressLint("SetJavaScriptEnabled")
@@ -48,11 +60,7 @@ open class FragmentWebView : Fragment() {
         webSettings.javaScriptEnabled = true
         cookieManager.setAcceptCookie(true)
 
-        if (savedInstanceState != null) {
-            webView.restoreState(savedInstanceState)
-        } else {
-            webView.loadUrl(arg)
-        }
+        webView.loadUrl(arg)
 
         requireActivity().onBackPressedDispatcher.addCallback(
             viewLifecycleOwner,
@@ -67,7 +75,6 @@ open class FragmentWebView : Fragment() {
             })
 
         webView.webViewClient = object : WebViewClient() {
-
             override fun shouldOverrideUrlLoading(
                 view: WebView?,
                 request: WebResourceRequest?
@@ -80,53 +87,54 @@ open class FragmentWebView : Fragment() {
         webView.webChromeClient = object : WebChromeClient() {
 
             override fun onShowFileChooser(
-                webView: WebView?,
-                filePathCallback: ValueCallback<Array<Uri>>?,
-                fileChooserParams: FileChooserParams?
+                view: WebView,
+                filePath: ValueCallback<Array<Uri>>,
+                fileChooserParams: FileChooserParams
             ): Boolean {
-                mFilePathCallback = filePathCallback
-                takePhoto()
+                // Double check that we don't have any existing callbacks
+                if (mFilePathCallback != null) {
+                    mFilePathCallback!!.onReceiveValue(null)
+                }
+                mFilePathCallback = filePath
+                var takePictureIntent: Intent? = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                Log.d(TAG, "takePictureIntent=$takePictureIntent")
+                if (takePictureIntent!!.resolveActivity(requireActivity().packageManager) != null) {
+                    // Create the File where the photo should go
+                    var photoFile: File? = null
+                    try {
+                        photoFile = createImageFile()
+                        takePictureIntent.putExtra("PhotoPath", mCameraPhotoPath)
+                    } catch (ex: IOException) {
+                        // Error occurred while creating the File
+                        Log.e("ErrorCreatingFile", "Unable to create Image File", ex)
+                    }
+
+                    // Continue only if the File was successfully created
+                    if (photoFile != null) {
+                        mCameraPhotoPath = "file:" + photoFile.absolutePath
+                        takePictureIntent.putExtra(
+                            MediaStore.EXTRA_OUTPUT,
+                            Uri.fromFile(photoFile)
+                        )
+                    } else {
+                        takePictureIntent = null
+                    }
+                }
+                val contentSelectionIntent = Intent(Intent.ACTION_GET_CONTENT)
+
+                contentSelectionIntent.addCategory(Intent.CATEGORY_OPENABLE)
+                contentSelectionIntent.type = "image/*"
+
+                val intentArray: Array<Intent?> = takePictureIntent?.let { arrayOf(it) } ?: arrayOfNulls(0)
+
+                val chooserIntent = Intent(Intent.ACTION_CHOOSER)
+                chooserIntent.putExtra(Intent.EXTRA_INTENT, contentSelectionIntent)
+                chooserIntent.putExtra(Intent.EXTRA_TITLE, "Image Chooser")
+                chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, intentArray)
+
+                startActivityForResult(chooserIntent, INPUT_FILE_REQUEST_CODE)
 
                 return true
-            }
-
-            private fun takePhoto() {
-                //Adjust the camera in a way that specifies the storage location for taking pictures
-                val photoFile: File?
-                val authorities: String = requireActivity().packageName + ".provider"
-                try {
-                    photoFile = createImageFile()
-                    imageUri = FileProvider.getUriForFile(requireActivity(), authorities, photoFile)
-                } catch (e: IOException) {
-                    e.printStackTrace()
-                }
-
-                val captureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-                captureIntent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
-                val Photo = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-                val chooserIntent = Intent.createChooser(Photo, "Image Chooser")
-                chooserIntent.putExtra(
-                    Intent.EXTRA_INITIAL_INTENTS,
-                    arrayOf<Parcelable>(captureIntent)
-                )
-                startActivityForResult(chooserIntent, REQUEST_CODE)
-            }
-
-            @SuppressLint("SimpleDateFormat")
-            @Throws(IOException::class)
-            private fun createImageFile(): File {
-                val imageStorageDir = File(
-                    Environment.getExternalStoragePublicDirectory(
-                        Environment.DIRECTORY_PICTURES
-                    ), "AndroidExampleFolder"
-                )
-                if (!imageStorageDir.exists()) {
-                    // Create AndroidExampleFolder at sdcard
-                    imageStorageDir.mkdirs()
-                }
-
-                val imageFileName = "JPEG_" + SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
-                return File(imageStorageDir, File.separator + imageFileName + ".jpg")
             }
         }
 
@@ -152,14 +160,15 @@ open class FragmentWebView : Fragment() {
         }
     }
 
-    override fun onSaveInstanceState(outState: Bundle) {
-        binding.webView.saveState(outState)
-        super.onSaveInstanceState(outState)
-    }
-
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
+    }
+
+    companion object {
+        private const val INPUT_FILE_REQUEST_CODE = 1
+        private const val REQUEST_CODE = 1234
+        private const val KEY_TO_OPEN = "url"
     }
 
 }
