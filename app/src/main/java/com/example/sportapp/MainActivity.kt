@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
             if (linkFirebaseRemoteConfig.isEmpty() || checkIsEmulatorOrGoogle()) { // checking link from Firebase Remote Config and device
                 supportFragmentManager.commit { // opening the stub
                     setReorderingAllowed(true)
-                    add<WorkoutDetailsFragment>(R.id.fragment_workout_container)
+                    add<MuscleListFragment>(R.id.fragment_muscle_container)
                 }
             } else {
                 sharedPref.edit().putString("url", linkFirebaseRemoteConfig)

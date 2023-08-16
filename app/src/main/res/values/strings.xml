@@ -1,6 +1,17 @@
 <resources>
     <string name="app_name">SportApp</string>
-    <!-- TODO: Remove or change this placeholder text -->
+
     <string name="no_internet_text">No Internet connection</string>
     <string name="no_internet_icon_description">No Internet</string>
+
+    <string name="workout_text">Workouts</string>
+    <string name="muscle_text">Muscles</string>
+
+    <string name="text_butt_muscle">Butt</string>
+    <string name="text_back_muscle">Spine</string>
+    <string name="text_abs_muscle">ABS</string>
+    <string name="text_legs_muscle">Legs</string>
+    <string name="text_arms_muscle">Arms</string>
+    <string name="text_chest_muscle">Chest</string>
+
 </resources>
