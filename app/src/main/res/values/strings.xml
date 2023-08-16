@@ -14,4 +14,65 @@
     <string name="text_arms_muscle">Arms</string>
     <string name="text_chest_muscle">Chest</string>
 
+    <string name="text_butt_work1">Grip the bar across your shoulders and support it on your upper back. Unwreck the bar by straightening your legs, and take a step back. Bend your knees as you love the weight without altering the form of your back until your lips are below your knees. Raise the bar back to starting position, lift with your legs and exhale at the top.</string>
+
+    <string name="text_butt_work2">Sit on the ground with a bench behind you. Lean back against the bench so that your shoulders are resting upon it, stretch your arms out to either side using the bench as support. Raise the weight by driving through your feet and extending your hips upwards. Slowly extend as far as you can, and then slowly return to the starting position</string>
+
+    <string name="text_butt_work3">Step forward with one leg. Lower your body until your rear knee nearly touches the ground. Ensure you remain upright, and your front knee stay above the front foot. Push off the floor with your front foot until you return to the starting position. Switch legs.</string>
+
+    <string name="text_butt_work4">Place the barbell on your back. Step your foot back and around while simultaneously bringing the weight down. Return to start and repeat on other leg.</string>
+
+    <string name="text_butt_work5">Take a shoulder width, double overhand or mixed grip.Push your hips back while leaving your knees mostly extended. Look for a stretch in your hamstrings.When you feel the stretch, push your hips forward until you\'re back in a standing position.</string>
+
+    <string name="text_spine_work1">Grasp the bar with an overhand grip, arms and shoulders fully extended. Pull your body up until your chin is above the bar. Lower your body back to starting position.</string>
+
+    <string name="text_spine_work2">Brace your off arm against something stable (bench, box). Stagger your stance so your leg on the side of your working arm is back. Try to get your torso to parallel with the ground. That will extend your range of motion.Let your arm hang freely and then pull your elbow back. Imagine you\'ve got a tennis ball in your armpit and squeeze it each rep.</string>
+
+    <string name="text_spine_work3">You can use any attachment. Cable should be set all the way to the top of the machine. Grab your attachment and walk a few steps back. Push your butt back to where you are leaning forward somewhat. Initiate the movement with your shoulders and not your elbows. Imagine trying to pull the attachment through your thighs at the bottom.</string>
+
+    <string name="text_spine_work4">Grip the bar with the palms facing forward, your hands need to be spaced out at a distance wider than shoulder width. As you have both arms extended in front of you holding the bar, bring your torso back around 30 degrees while sticking your chest out. Pull the bar down to about chin level or a little lower in a smooth movement whilst squeezing the shoulder blades together. After a second of squeezing, slowly raise the bar back to the starting position when your arms are fully extended.</string>
+
+    <string name="text_spine_work5">Sit with your back straight on the machine and grip the handles. Pull the handles back using your arms. Your legs and torso should be at a 90° angle. Push out your chest. Pull the handles towards your body until your hands are beside your abdomen.</string>
+
+    <string name="text_abs_work1">Start in a kneeling position with your hands planted on the ground. Pick your knees up off the ground. Hold in this position with a flat back.</string>
+
+    <string name="text_abs_work2">Hold the bar with a slightly wider than shoulder width grip. Push the bar up toward the ceiling and maintain that elbow extension. Flex your abs and sit-up. Aim to get your torso vertical while maintaining the barbell overhead.</string>
+
+    <string name="text_abs_work3">Sit on the floor and flex your knees and hips to a 90 degree angle. Your feet should be hovering off the ground. (If that\'s too hard start with heels on the floor). Rotate your upper spine to engage your obliques.</string>
+
+    <string name="text_abs_work4">Start in a hand plank position and walk your hands further out until your ears are between your biceps. Hold in this position for the allotted amount of time. Make sure you keep a flat back for the whole set.</string>
+
+    <string name="text_abs_work5">Lay flat on the ground with your arms extended over head. Pick your upper back and your legs off the ground. Your body should be in a banana shape. Hold in this position.</string>
+
+    <string name="text_arms_work1">Hold the dumbbells with a neutral grip (thumbs facing the ceiling). Slowly lift the dumbbell up to chest height. Return to starting position and repeat.</string>
+
+    <string name="text_arms_work2">Take a double overhand grip that\'s about shoulder width. Flex your elbows while keeping your elbows tucked in. Try not to let them flare out. Curl until your forearm presses into your bicep. Then fully extend your elbows at the bottom of each rep.</string>
+
+    <string name="text_arms_work3">Stand facing the wall, an arm\'s width away. Place your hand on the wall with your fingers pointing down. Lean slightly into the wall to feel the stretch in your bicep.</string>
+
+    <string name="text_arms_work4">Stand up straight with a kettlebell in one hand with your forearm facing out. Raise the kettlebell, bending your arm at the elbow and keeping your forearm vertical until your palm faces the shoulder. Lower to the starting position and repeat.</string>
+
+    <string name="text_arms_work5">Attach band to a low anchor point. Point your palms straight forward. Flex your elbow until you feel your biceps contract. Then fully extend elbows.</string>
+
+    <string name="text_chest_work1">Lay flat on the incline bench with your feet on the ground. Raise the dumbbells until you have straight arms. Lower the dumbbells to your mid chest. Raise the dumbbells until you\'ve locked your elbows.</string>
+
+    <string name="text_chest_work2">Hold your body with arms locked above the equipment. Lower your body slowly while leaning forward, flare out your elbows. Raise your body above the bars until your arms are locked.</string>
+
+    <string name="text_chest_work3">Attach the band to an anchor point that is about shoulder height. Take a few steps away until the band is taut. Extend your shoulder joint and elbow across your body until your arm is fully extended.</string>
+
+    <string name="text_chest_work4">Laying on the floor with your knees bent and feet firmly on the floor, hold the kettlebell at your chest with both hands. Fully extend your arms, raising the kettlebell until your elbows are locked. Lower the kettlebell to the starting position and repeat.</string>
+
+    <string name="text_chest_work5">Stand facing bench or sturdy elevated platform.Place hands on edge of bench or platform, slightly wider than shoulder width. Slowly lower your body until your chest almost touches the bench. Push body up until arms are extended.</string>
+
+    <string name="text_legs_work1">Standing up straight, using a bench as a step, raise one foot onto the bench and hold the kettlebell in the same arm as the straight leg. Stand and bring both feet onto the bench. Slowly lower your leg back down to the starting position. Repeat.</string>
+
+    <string name="text_legs_work2">Stand with your feet shoulder width apart. flex your knees and hips and sit back into the squat while lowering your body. Continue down to full depth. Return to starting position.</string>
+
+    <string name="text_legs_work3">Place one foot flat on the ground in front of you at a 90 degree angle. With your other leg, balance upon your knee, placing the tip of your foot against the wall behind you for balance. Place your hands on your knee in front of you, and lean forward so that your knee extends over your foot. Pause at the apex of the stretch, and slowly return to starting position. Repeat with your other leg.</string>
+
+    <string name="text_legs_work4">Lay flat on your belly, with both hands reach back and grab the tops of your feet. Keeping your upper legs flat on the ground, pull both of your feet towards your buttocks. Pause at the apex of the stretch, then return to starting position.</string>
+
+    <string name="text_legs_work5">Lay flat on the ground with both feet planted. Make sure you keep your heels glued to the floor. Place the dumbbell on your hips. Push your hips toward the ceiling until you feel your glutes contract. Then return to the floor.</string>
+
+
 </resources>

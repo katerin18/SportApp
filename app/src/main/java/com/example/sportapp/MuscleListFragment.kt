@@ -11,7 +11,7 @@ import com.example.sportapp.RecyclerFiles.ModelMuscle
 import com.example.sportapp.RecyclerFiles.MuscleAdapter
 
 class MuscleListFragment : Fragment() {
-    val imageMuscleList = listOf(
+    private val imageMuscleList = listOf(
         R.drawable.butt_muscle,
         R.drawable.abs_muscle,
         R.drawable.biceps_muscle,
@@ -19,7 +19,7 @@ class MuscleListFragment : Fragment() {
         R.drawable.legs_muscle,
         R.drawable.spine_muscle
     )
-    val titleMuscleList = listOf(
+    private val titleMuscleList = listOf(
         R.string.text_butt_muscle,
         R.string.text_abs_muscle,
         R.string.text_arms_muscle,
@@ -50,7 +50,7 @@ class MuscleListFragment : Fragment() {
     private fun getListOfModels(): ArrayList<ModelMuscle> {
         val items: ArrayList<ModelMuscle> = ArrayList()
         for (i in titleMuscleList.indices) {
-            items.add(ModelMuscle(titleMuscleList[i], imageMuscleList[i]))
+            items.add(ModelMuscle(requireContext().getString(titleMuscleList[i]), imageMuscleList[i]))
         }
 
         return items

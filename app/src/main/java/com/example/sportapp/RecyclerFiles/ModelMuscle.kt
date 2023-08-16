@@ -1,6 +1,6 @@
 package com.example.sportapp.RecyclerFiles
 
 data class ModelMuscle(
-    val title: Int,
+    val title: String,
     val imageMuscle: Int
 )
