@@ -25,9 +25,4 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@+id/textView_muscles" />
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fragment_workout_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>

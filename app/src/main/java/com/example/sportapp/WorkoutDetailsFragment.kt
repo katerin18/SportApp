@@ -120,7 +120,8 @@ class WorkoutDetailsFragment : Fragment() {
 
     private fun getWorkoutsList(): ArrayList<ModelWorkout> {
         val listWorkout: ArrayList<ModelWorkout> = arrayListOf()
-        when (requireArguments().getString("item")) {
+        val typeMuscle = requireArguments().getString("item")
+        when (typeMuscle) {
             "Butt" -> {
                 for (i in buttTitleListWorkouts.indices) {
                     listWorkout.add(
